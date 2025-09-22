@@ -16,7 +16,7 @@ const ModalAddImportant = ({
     setImportant: (option: Important) => void
     addTodo?: () => Promise<void>
 }) => {
-    const importantValues: Important[] = ["Very", "Medium", "Low"]
+    const importantValues: Important[] = ["Low", "Medium", "Very"]
 
     if (!isOpen) return null
     return createPortal(

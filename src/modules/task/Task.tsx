@@ -1,32 +1,35 @@
 "use client"
 import React from "react"
 import s from "./task.module.css"
-import { fetchDeleteTodo } from "@/fetch/fetchDeleteTodo"
-import { fetchPut } from "@/fetch/fetchPutTodo"
+import {
+    useDeleteTodoMutation,
+    useMakeCompletedTodoMutation,
+} from "@/redux/service/mockApiData"
 
 const Task = ({
     id,
     title,
     completed,
-    refetch,
     onOpen,
 }: {
     id: string
     title: string
     completed: boolean
-    refetch: () => void
     onOpen?: (id: string) => void
 }) => {
-    const { deleteTask } = fetchDeleteTodo(id)
+    const [deleteTodo, { isError }] = useDeleteTodoMutation()
+    const [makeCompleted] = useMakeCompletedTodoMutation()
 
-    async function onRemoveTask(e: React.MouseEvent<Element, MouseEvent>) {
-        await deleteTask(e)
-        refetch()
+    async function onRemoveTask() {
+        try {
+            await deleteTodo(id)
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     async function onPutTask() {
-        await fetchPut(id)
-        refetch()
+        await makeCompleted(id)
     }
 
     return (

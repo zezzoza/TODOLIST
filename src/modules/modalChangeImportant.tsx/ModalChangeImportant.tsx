@@ -12,7 +12,7 @@ const ModalChangeImportant = ({
     onClose: () => void
     handleChangeImportant: (value: Important) => Promise<void>
 }) => {
-    const importantValues: Important[] = ["Very", "Medium", "Low"]
+    const importantValues: Important[] = ["Low", "Medium", "Very"]
 
     if (!isOpen) return null
     return createPortal(

@@ -1,17 +1,12 @@
 "use client"
 import React, { useState } from "react"
 import s from "./addContainer.module.css"
-import { fetchAddTodo } from "@/fetch/fetchAddTodo"
 import { Important, Todo } from "@/types/types"
 import ModalAddImportant from "../modalAddImportant/ModalAddImportant"
+import { useAddNewTodoMutation } from "@/redux/service/mockApiData"
 
-const AddContainer = ({
-    idUser,
-    refetch,
-}: {
-    idUser: number
-    refetch: () => void
-}) => {
+const AddContainer = ({ idUser }: { idUser: number }) => {
+    const [addNewTodo, { data }] = useAddNewTodoMutation()
     const [value, setValue] = useState("")
     const [important, setImportant] = useState<Important>("Low")
     const [isOpen, setIsOpen] = useState(false)
@@ -38,10 +33,9 @@ const AddContainer = ({
             important: important,
         }
 
-        await fetchAddTodo(todo)
+        await addNewTodo(todo)
         setValue("")
         setIsOpen(false)
-        refetch()
     }
 
     return (
